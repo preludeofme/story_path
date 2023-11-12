@@ -1,4 +1,5 @@
 "use client";
+import { Book } from "@/components/book/book";
 import { Container, Typography, Box } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
@@ -49,7 +50,7 @@ export default function LandingPage() {
         <Typography variant="h2" gutterBottom component="h1">
           Welcome to Our Park
         </Typography>
-        {/* ... other content ... */}
+        <Book />
       </Container>
     </Box>
   );

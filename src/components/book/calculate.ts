@@ -1,6 +1,6 @@
-type Side = "left" | "right";
+export type Side = "left" | "right";
 
-interface CalculateResult {
+export interface CalculateResult {
   z0x: number;
   z0y: number;
   z1x: number;
