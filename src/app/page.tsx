@@ -1,7 +1,7 @@
 "use client";
 import { Book } from "@/components/book/book";
 import { Container, Typography, Box } from "@mui/material";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { useState } from "react";
 
 type MousePosition = {
@@ -44,7 +44,16 @@ export default function LandingPage() {
           transform: `scale(${mousePosition.scale})`, // Apply scale transformation here
         }}
       >
-        <Image src="/park.png" alt="Park" layout="fill" objectFit="cover" quality={75} />
+        <Image
+          src="/park.png"
+          alt="Park"
+          quality={75}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: "cover",
+          }}
+        />
       </Box>
       <Container maxWidth="lg" sx={{ position: "relative", zIndex: 2 }}>
         <Typography variant="h2" gutterBottom component="h1">
