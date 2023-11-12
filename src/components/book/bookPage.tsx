@@ -1,4 +1,5 @@
 import React from "react";
+import { BookPage, BookTitle } from "./bookStyles";
 
 export interface IBookPage {
   id: string | number; // Unique identifier for each page
@@ -20,12 +21,29 @@ export const BookPages: IBookPage[] = [
   {
     id: 2,
     content: (
-      <div>
-        <h2>Chapter 1</h2>
+      <BookPage style={{ backgroundColor: "lightblue" }}>
+        <BookTitle>Chapter 1</BookTitle>
         <p>Chapter content here...</p>
-      </div>
+      </BookPage>
     ),
-    style: { backgroundColor: "lightblue" },
+  },
+  {
+    id: 3,
+    content: (
+      <BookPage style={{ backgroundColor: "lightpink" }}>
+        <BookTitle>Chapter 2</BookTitle>
+        <p>Chapter content here...</p>
+      </BookPage>
+    ),
+  },
+  {
+    id: 4,
+    content: (
+      <BookPage style={{ backgroundColor: "lightblue" }}>
+        <BookTitle>Chapter 3</BookTitle>
+        <p>Chapter content here...</p>
+      </BookPage>
+    ),
   },
   // ... more pages
 ];

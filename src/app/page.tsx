@@ -40,7 +40,7 @@ export default function LandingPage() {
           top: 0,
           left: 0,
           zIndex: -1,
-          transition: "transform 0.9s ease-out", // Smooth the scaling transition
+          transition: "transform 1.9s ease-out", // Smooth the scaling transition
           transform: `scale(${mousePosition.scale})`, // Apply scale transformation here
         }}
       >

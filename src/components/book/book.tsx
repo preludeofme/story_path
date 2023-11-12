@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, CSSProperties } from "react";
 import { useSprings, animated } from "react-spring";
 import { useGesture } from "react-use-gesture";
 
 import { calculate, CalculateResult, Side } from "./calculate";
 import { BookPages } from "./bookPage";
+import { AnimatedBookPage, BookContainer } from "./bookStyles";
 
 interface PageState {
   // Example properties, adjust based on your actual requirements
@@ -18,23 +19,26 @@ interface BookProps {
 }
 
 export const Book: React.FC<BookProps> = () => {
-  // ... existing state setup
-
   const initialPageStates: PageState[] = BookPages.map((_, index) => ({
-    rotation: 0, // Initial rotation angle
-    isVisible: true, // Initially, all pages are visible
-    zIndex: index, // Initial z-index, could be based on the page order
-    calculateResult: null, // Initial calculateResult
+    rotation: 0,
+    isVisible: index < 2, // Only the first two pages are visible
+    zIndex: index,
+    calculateResult: null,
   }));
 
   const [pages, setPages] = useState<PageState[]>(initialPageStates);
+  const [currentPage, setCurrentPage] = useState(0); // Start from the first page
 
-  const [springs, api] = useSprings(pages.length, (index) => ({
-    // Define initial spring styles based on page state
-    // Use calculated values for styles if available
-    transform: `rotateY(${pages[index].calculateResult?.r || 0}rad)`,
-    // ... other styles based on calculateResult
-  }));
+  const [springs, api] = useSprings(pages.length, (index) => {
+    return {
+      display: pages[index].isVisible ? "block" : "none",
+      zIndex: pages[index].zIndex,
+      transform: `rotateY(${pages[index].calculateResult?.r || 0}rad) 
+                  translateX(${pages[index].calculateResult?.x || 0}px)`,
+      config: { duration: 1000 },
+      // Add any other properties you need to animate
+    };
+  });
 
   function determineSide(clientX: number, bookContainer: HTMLElement): Side {
     const rect = bookContainer.getBoundingClientRect();
@@ -69,33 +73,72 @@ export const Book: React.FC<BookProps> = () => {
       setPages((currentPages) => {
         const newPages = [...currentPages];
         newPages[index] = { ...newPages[index], calculateResult: calcResult };
+        console.log("Updated Pages:", newPages); // Add this line
         return newPages;
       });
 
-      api.start((i) => ({
-        transform: `rotateY(${calcResult?.r || 0}rad)`,
-        // Additional styles based on calcResult and page state
-      }));
+      api.start((i) => {
+        if (i === index) {
+          return {
+            transform: `rotateY(${calcResult?.r || 0}rad) translateX(${calcResult?.x || 0}px)`,
+            // Apply other relevant styles from calcResult
+          };
+        }
+        return {};
+      });
+
+      // Logic to update currentPage and page visibility on drag end
+      if (!down) {
+        const shouldTurnPage = needFinishTurn; // Or any other logic to determine page turn
+
+        if (shouldTurnPage) {
+          // Update currentPage based on the side
+          setCurrentPage((prev) => {
+            let nextPage = prev;
+            if (side === "right" && index === prev + 1) {
+              nextPage = Math.min(prev + 2, BookPages.length - 2);
+            } else if (side === "left" && index === prev) {
+              nextPage = Math.max(prev - 2, 0);
+            }
+            return nextPage;
+          });
+        }
+
+        // Update visibility of pages
+        setPages((currentPages) =>
+          currentPages.map((page, idx) => ({
+            ...page,
+            isVisible: idx >= currentPage && idx < currentPage + 2,
+            zIndex: idx === currentPage || idx === currentPage + 1 ? 1000 : idx, // Ensure current pages are on top
+          }))
+        );
+      }
     },
     // ... other gesture handlers
   });
 
   // ... useEffect and return statement
   return (
-    <div id="book-container">
-      {springs.map((props, index) => (
-        <animated.div
-          {...props}
-          {...bind(index)}
-          style={
-            {
-              /* Additional styles */
-            }
-          }
-        >
-          {/* Page content */}
-        </animated.div>
-      ))}
+    <div id="book-container" style={{ backgroundColor: "lightgray", position: "relative" }}>
+      {springs.map((animatedStyles, index) => {
+        const key = BookPages[Math.floor(index / 2)].id + "-" + index;
+
+        return (
+          <div key={key} style={{ position: "relative", width: "100%", height: "100%" }}>
+            <animated.div
+              className="page"
+              style={{
+                backgroundColor: index % 2 === 0 ? "lightblue" : "lightcoral",
+                position: "absolute",
+                ...animatedStyles,
+              }}
+              {...bind(index)}
+            >
+              {/* page content */}
+            </animated.div>
+          </div>
+        );
+      })}
     </div>
   );
 };
