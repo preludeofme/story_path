@@ -1,7 +1,7 @@
 "use client";
 import { Book } from "@/components/book/book";
 import { Container, Typography, Box } from "@mui/material";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useState } from "react";
 
 type MousePosition = {
