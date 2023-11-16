@@ -91,7 +91,7 @@ const LandingPage = () => {
               color="black"
               sx={{ textAlign: "center", mt: 2, fontFamily: '"Times New Roman", Times, serif', fontWeight: "bold" }}
             >
-              {/* {"Title of book"} */}
+              {"The disaster for the chicken nuggets"}
             </Typography>
           </Box>
         </Box>
