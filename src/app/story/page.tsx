@@ -43,7 +43,7 @@ export default function StoryPage() {
     const height = window.innerHeight;
     const distanceX = Math.abs(clientX - width / 2);
     const distanceY = Math.abs(clientY - height / 2);
-    const scale = 1 + (distanceX / width + distanceY / height) * 0.2;
+    const scale = 1 + (distanceX / width + distanceY / height) * 0.025;
     setMousePosition({ scale });
   };
 
@@ -190,8 +190,8 @@ export default function StoryPage() {
         }}
       >
         <Image
-          src="/park.png"
-          alt="Park"
+          src="/background.jpg"
+          alt="Background"
           quality={75}
           fill
           sizes="100vw"

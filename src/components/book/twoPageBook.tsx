@@ -11,16 +11,16 @@ interface BookProps {
 }
 
 const TwoPageBook: React.FC<BookProps> = ({ leftPage, rightPage, visible }) => (
-  <Card
+  <Box
+    id="twoBookPage"
     sx={{
-      width: "70vw",
-      height: "80vh",
-      margin: "auto",
+      width: "100vw",
+      height: "82vh",
+      marginLeft: "6px",
       overflow: "hidden",
       position: "relative",
-      backgroundColor: "#fdf8e1", // Off-white paper color
-      background: "linear-gradient(to bottom, #fdf8e1, #f1e4c6)", // Subtle gradient
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Soft shadow for depth
+      backgroundColor: "#e4e4e6", // Off-white paper color
+      background: "linear-gradient(to bottom, #e4e4e6, #e4e4e6)", // Subtle gradient
       zIndex: 2,
     }}
   >
@@ -45,7 +45,7 @@ const TwoPageBook: React.FC<BookProps> = ({ leftPage, rightPage, visible }) => (
             bottom: 0,
             width: "6px",
             borderRight: "1px solid black",
-            boxShadow: "16px 0 30px rgba(0, 0, 0, 0.5)", // Adjusted shadow opacity
+            boxShadow: "16px 0 30px rgba(0, 0, 0, 0.8)", // Adjusted shadow opacity
           }}
         />
       </Grid>
@@ -69,12 +69,12 @@ const TwoPageBook: React.FC<BookProps> = ({ leftPage, rightPage, visible }) => (
             bottom: 0,
             width: "6px",
             borderLeft: "1px solid black",
-            boxShadow: "-16px 0 30px rgba(0, 0, 0, 0.5)", // Adjusted shadow opacity
+            boxShadow: "-16px 0 30px rgba(0, 0, 0, 0.8)", // Adjusted shadow opacity
           }}
         />
       </Grid>
     </Grid>
-  </Card>
+  </Box>
 );
 
 export default TwoPageBook;

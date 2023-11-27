@@ -3,6 +3,7 @@ import React from "react";
 import { BookPageSection } from "./pageSection/bookPageSection";
 import { ContentData } from "@/app/story/page";
 import { EndPage } from "./lastPage";
+import LetterCard from "./pageSection/paperPage";
 
 export interface BookPageProps {
   pageId: number;
@@ -23,14 +24,15 @@ export const BookPage: React.FC<BookPageProps> = ({ contents, type, onClick, pag
 
     return (
       <React.Fragment key={index}>
-        <Grid item xs={type === "single" ? 11 : 5.5}>
+        {/* <Grid item xs={type === "single" ? 11 : 5.5}>
           <BookPageSection contents={content} type={type} onClick={onClick} pageId={pageId} />
         </Grid>
         {type === "double" && content.nextPage && content.nextPage % 2 !== 0 && (
           <Grid item xs={0.1}>
             <Divider orientation="vertical" />
           </Grid>
-        )}
+        )} */}
+        <LetterCard />
       </React.Fragment>
     );
   };

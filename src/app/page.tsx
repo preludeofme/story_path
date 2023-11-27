@@ -42,7 +42,7 @@ const LandingPage = () => {
         }}
       >
         <Image
-          src="/park.png" // Replace with your background image path
+          src="/background.jpg" // Replace with your background image path
           alt="Background"
           layout="fill"
           objectFit="cover"
