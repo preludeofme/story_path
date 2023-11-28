@@ -200,7 +200,20 @@ export default function StoryPage() {
           }}
         />
       </Box>
-      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 2, display: "flex", justifyContent: "center" }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          position: "relative",
+          zIndex: 2,
+          display: "flex",
+          justifyContent: "center",
+          transform: "perspective(1500px) rotateY(0deg) rotateX(15deg) skewY(0deg)",
+          transition: "transform 1.2s",
+          "&:hover": {
+            transform: "perspective(900px) rotateY(0deg) rotateX(0deg) skewY(0deg)",
+          },
+        }}
+      >
         {renderBookView()}
       </Container>
       <Box
@@ -210,7 +223,7 @@ export default function StoryPage() {
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",
-          gap: 5, // Space between buttons
+          gap: 5,
         }}
       >
         <Fab color="primary" aria-label="previous" onClick={handlePrevPage} disabled={isPageNavButtonDisabled("previous")}>

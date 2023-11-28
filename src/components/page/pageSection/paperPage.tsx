@@ -43,9 +43,18 @@ const LetterCard: React.FC = () => {
       <PaperOverlay />
       <ContentBox>
         <StyledCard>
-          <Typography variant="body1">here is my content</Typography>
+          <Typography variant="body1">
+            Long Life I read somewhere that having good friends leads to a long life. If that’s the case, I’m basically immortal. I’ve been blessed
+            during my life with more than my share of good friends, but these three here are the standouts. When I was (much) younger, I thought that
+            anyone who was friendly to me was a friend. But a few experiences changed that perspective, and for most of my adult life I have had a
+            pretty stringent set of guidelines by which I consider someone a friend. These three tick every one of the boxes on that list. And that’s
+            clearly illustrated by the fact that over the past 50-60 years we’ve remained friends through all of life’s ups and downs. All three have
+            known me when I was an immature teen, a self-absorbed young adult, and through times when I made some poor decisions. We don’t all share
+            the same likes and dislikes by any means, but that really doesn’t impact our friendship – and that’s a mark of a true and lasting
+            friendship. I’d do just about anything for these three guys, and what’s more, I know they’d do the same for me when the chips are down. I
+            don’t have a million dollars, but I have these guys – and I wouldn’t trade them and their friendship for any amount of money.
+          </Typography>
         </StyledCard>
-        <CaptionBox>here is my caption</CaptionBox>
       </ContentBox>
     </>
   );
