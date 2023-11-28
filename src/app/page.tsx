@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
+import PostEditor from "@/components/postEditor/postEditor";
 
 const LandingPage = () => {
   const [mousePosition, setMousePosition] = useState({ scale: 1 });
@@ -27,7 +28,6 @@ const LandingPage = () => {
         alignItems: "center",
         justifyContent: "center",
       }}
-      onMouseMove={handleMouseMove}
     >
       <Box
         sx={{
@@ -52,52 +52,30 @@ const LandingPage = () => {
       <Link href="/story" passHref>
         <Box
           sx={{
-            width: "50vw",
-            height: "70vh",
+            width: "20vw",
+            height: "50vh",
             cursor: "pointer",
-            border: "5px solid",
-            borderColor: "primary.main",
-            boxShadow: "10px 10px 20px #aaa",
             overflow: "hidden",
             position: "relative",
             display: "flex", // Adding flexbox
             flexDirection: "column",
             justifyContent: "center", // Center content vertically within the box
             alignItems: "center", // Center content horizontally within the box
+            transform: "perspective(1500px) rotateY(0deg) rotateX(15deg) skewY(0deg)",
+            transition: "transform 1.2s",
+            "&:hover": {
+              transform: "perspective(900px) rotateY(0deg) rotateX(0deg) skewY(0deg)",
+            },
           }}
         >
           <Image
-            src="/story/book cover.png" // Replace with your book cover image path
+            src="/journal.png" // Replace with your book cover image path
             alt="Book Cover"
-            layout="responsive"
-            width={1} // Aspect ratio width (1:1 in this case)
-            height={1} // Aspect ratio height, adjust as needed
-            objectFit="contain"
+            fill
+            style={{ objectFit: "contain" }}
           />
-          <Box
-            sx={{
-              position: "absolute", // Absolute positioning
-              top: "50%", // Center vertically
-              left: "50%",
-              backgroundColor: "white",
-              opacity: "85%",
-              transform: "translate(-50%, -50%)", // Adjust for centering
-              textAlign: "center",
-              zIndex: 2,
-            }}
-          >
-            <Typography
-              variant="h2"
-              color="black"
-              sx={{ textAlign: "center", mt: 2, fontFamily: '"Times New Roman", Times, serif', fontWeight: "bold" }}
-            >
-              {/* {"Title of book"} */}
-            </Typography>
-          </Box>
         </Box>
-        <Typography variant="h4" color="black" sx={{ textAlign: "center", mt: 2, fontFamily: '"Times New Roman", Times, serif' }}>
-          Click to Start the Adventure!
-        </Typography>
+        <PostEditor />
       </Link>
     </Box>
   );
