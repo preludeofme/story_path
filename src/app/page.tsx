@@ -10,34 +10,10 @@ import "../css/transitions.css"; // Your CSS file for transitions
 
 const LandingPage = () => {
   const [isOpen, setOpen] = useState(false);
-  const [showBook, setShowBook] = useState(false);
   const { mousePosition, handleMouseMove } = useMouseMove();
-
-  useEffect(() => {
-    if (isOpen) {
-      // Delay the appearance of the book
-      const timeoutId = setTimeout(() => setShowBook(true), 200);
-      return () => clearTimeout(timeoutId);
-    } else {
-      setShowBook(false);
-    }
-  }, [isOpen]);
 
   const handleBookClick = () => {
     setOpen(!isOpen);
-  };
-  const fadeIn = {
-    opacity: 1,
-    zIndex: 1,
-    transition: "opacity 2s ease-in",
-  };
-
-  const fadeOut = {
-    opacity: 0,
-    zIndex: 0,
-    transition: "opacity 2s ease-out",
-    position: "absolute", // Keeps the element in the DOM for the transition
-    visibility: "hidden", // Hides the element after the transition
   };
 
   return (
