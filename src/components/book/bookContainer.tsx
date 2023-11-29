@@ -115,43 +115,7 @@ export default function BookContainer() {
   // }, [currentPageId]);
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        height: "100vh",
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center", // Center vertically
-        justifyContent: "center", // Center horizontally
-      }}
-      onMouseMove={(e) => handleMouseMove(e as unknown as MouseEvent)}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
-      <Box
-        sx={{
-          position: "absolute",
-          height: "100vh",
-          width: "100vw",
-          top: 0,
-          left: 0,
-          zIndex: -1,
-          transition: "transform 0.9s ease-out",
-          transform: `scale(${mousePosition.scale})`,
-        }}
-      >
-        <Image
-          src="/background-evening.jpg"
-          alt="Background"
-          quality={75}
-          fill
-          sizes="100vw"
-          style={{
-            objectFit: "cover",
-          }}
-        />
-      </Box>
+    <>
       <Container
         maxWidth="lg"
         sx={{
@@ -185,6 +149,6 @@ export default function BookContainer() {
           <RedoIcon />
         </Fab>
       </Box>
-    </Box>
+    </>
   );
 }

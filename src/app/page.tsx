@@ -1,21 +1,43 @@
 "use client";
-import React, { useState } from "react";
-import Link from "next/link";
-import { Box, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box } from "@mui/material";
 import Image from "next/image";
-import PostEditor from "@/components/postEditor/postEditor";
+import useMouseMove from "@/globalHooks/useMouseMove";
+import JournalButton from "@/components/buttons/journalButton";
+import BookContainer from "@/components/book/bookContainer";
+import { CSSTransition } from "react-transition-group";
+import "../css/transitions.css"; // Your CSS file for transitions
 
 const LandingPage = () => {
-  const [mousePosition, setMousePosition] = useState({ scale: 1 });
+  const [isOpen, setOpen] = useState(false);
+  const [showBook, setShowBook] = useState(false);
+  const { mousePosition, handleMouseMove } = useMouseMove();
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    const { clientX, clientY } = event;
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const distanceX = Math.abs(clientX - width / 2);
-    const distanceY = Math.abs(clientY - height / 2);
-    const scale = 1 + (distanceX / width + distanceY / height) * 0.2;
-    setMousePosition({ scale });
+  useEffect(() => {
+    if (isOpen) {
+      // Delay the appearance of the book
+      const timeoutId = setTimeout(() => setShowBook(true), 200);
+      return () => clearTimeout(timeoutId);
+    } else {
+      setShowBook(false);
+    }
+  }, [isOpen]);
+
+  const handleBookClick = () => {
+    setOpen(!isOpen);
+  };
+  const fadeIn = {
+    opacity: 1,
+    zIndex: 1,
+    transition: "opacity 2s ease-in",
+  };
+
+  const fadeOut = {
+    opacity: 0,
+    zIndex: 0,
+    transition: "opacity 2s ease-out",
+    position: "absolute", // Keeps the element in the DOM for the transition
+    visibility: "hidden", // Hides the element after the transition
   };
 
   return (
@@ -28,6 +50,7 @@ const LandingPage = () => {
         alignItems: "center",
         justifyContent: "center",
       }}
+      onMouseMove={(e) => handleMouseMove(e as unknown as MouseEvent)}
     >
       <Box
         sx={{
@@ -49,33 +72,17 @@ const LandingPage = () => {
         />
       </Box>
 
-      <Link href="/thoughts" passHref>
-        <Box
-          sx={{
-            width: "20vw",
-            height: "50vh",
-            cursor: "pointer",
-            overflow: "hidden",
-            position: "relative",
-            display: "flex", // Adding flexbox
-            flexDirection: "column",
-            justifyContent: "center", // Center content vertically within the box
-            alignItems: "center", // Center content horizontally within the box
-            transform: "perspective(1500px) rotateY(0deg) rotateX(15deg) skewY(0deg)",
-            transition: "transform 1.2s",
-            "&:hover": {
-              transform: "perspective(900px) rotateY(0deg) rotateX(0deg) skewY(0deg)",
-            },
-          }}
-        >
-          <Image
-            src="/journal.png" // Replace with your book cover image path
-            alt="Book Cover"
-            fill
-            style={{ objectFit: "contain" }}
-          />
+      <CSSTransition in={!isOpen} timeout={1500} classNames="fade" unmountOnExit>
+        <Box sx={{ position: "absolute" }}>
+          <JournalButton handleClick={handleBookClick} />
         </Box>
-      </Link>
+      </CSSTransition>
+
+      <CSSTransition in={isOpen} timeout={1900} classNames="fade" unmountOnExit>
+        <Box sx={{ position: "absolute" }}>
+          <BookContainer />
+        </Box>
+      </CSSTransition>
     </Box>
   );
 };
