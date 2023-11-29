@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import { Button } from "@mui/material";
 
 const PostEditor: React.FC = () => {
   const [content, setContent] = useState<string>("");
@@ -46,8 +47,10 @@ const PostEditor: React.FC = () => {
     <div>
       <Editor
         initialValue="<p>Initial content</p>"
+        apiKey="88q63nivq7o7jxmfk5812qk5uvqya2qzmjur28ucmhxbt1r5"
         init={{
           height: 500,
+
           menubar: false,
           plugins: [
             "advlist autolink lists link image charmap print preview anchor",
@@ -65,7 +68,7 @@ const PostEditor: React.FC = () => {
         }}
         onEditorChange={handleEditorChange}
       />
-      <button onClick={() => console.log(content)}>Log Content</button>
+      <Button onClick={() => console.log(content)}>Post Thought</Button>
     </div>
   );
 };

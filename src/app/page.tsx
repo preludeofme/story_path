@@ -42,14 +42,14 @@ const LandingPage = () => {
         }}
       >
         <Image
-          src="/background.jpg" // Replace with your background image path
+          src="/background-evening.jpg" // Replace with your background image path
           alt="Background"
           layout="fill"
           objectFit="cover"
         />
       </Box>
 
-      <Link href="/story" passHref>
+      <Link href="/thoughts" passHref>
         <Box
           sx={{
             width: "20vw",
@@ -75,7 +75,6 @@ const LandingPage = () => {
             style={{ objectFit: "contain" }}
           />
         </Box>
-        <PostEditor />
       </Link>
     </Box>
   );
