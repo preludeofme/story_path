@@ -1,5 +1,5 @@
 {
-  "name": "storypath",
+  "name": "thoughtsofmyfather",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -18,7 +18,9 @@
     "@next/bundle-analyzer": "^13.4.17",
     "@prisma/client": "^5.5.2",
     "@tinymce/tinymce-react": "^4.3.2",
-    "axios": "^1.4.0",
+    "@vercel/blob": "^0.15.1",
+    "axios": "^1.6.2",
+    "base-64": "^1.0.0",
     "dompurify": "^3.0.6",
     "next": "^13.5.6",
     "next-auth": "^4.24.5",
@@ -27,6 +29,7 @@
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
+    "@types/base-64": "^1.0.2",
     "@types/next-auth": "^3.15.0",
     "@types/node": "^20",
     "@types/react": "^18",

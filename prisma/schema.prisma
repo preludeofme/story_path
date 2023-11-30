@@ -75,14 +75,6 @@ model Post {
   id        Int      @id @default(autoincrement())
   title     String
   content   String
-  images    Image[] // Relation to the Image model
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model Image {
-  id     Int    @id @default(autoincrement())
-  url    String // URL or ID of the image on the external hosting service
-  postId Int // Foreign key referencing the Post model
-  post   Post   @relation(fields: [postId], references: [id])
 }

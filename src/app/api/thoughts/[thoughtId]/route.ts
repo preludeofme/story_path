@@ -1,14 +1,11 @@
-// pages/api/conversations/[conversationId]/messages.ts
 import { NextRequest, NextResponse } from "next/server";
+import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../../prisma/prismaClient";
 
 export async function GET(req: NextRequest, { params }: { params: { thoughtId: number } }) {
   try {
     const post = await prisma.post.findUnique({
       where: { id: Number(params.thoughtId) },
-      include: {
-        images: true, // Assuming you want to include related images
-      },
     });
 
     return NextResponse.json(post, { status: 200 });

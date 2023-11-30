@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@mui/material";
+import Image from "next/image";
+import axios from "axios";
 
 const PostEditor: React.FC = () => {
   const [content, setContent] = useState<string>("");
-
+  const [blobImg, setBlobImg] = useState<string>("");
   const handleEditorChange = (content: string) => {
     setContent(content);
   };
@@ -17,6 +19,15 @@ const PostEditor: React.FC = () => {
     blobUri: () => string;
     uri: () => string | undefined;
   }
+  const myURL = "https://aoswchlkodefxg8r.public.blob.vercel-storage.com/image-XcB2Rk5bu5yX8gzUsyZweBXIhi2oCJ.png";
+
+  useEffect(() => {
+    const getImage = async () => {
+      const response = await axios.get(`/api/images?url=${myURL}`);
+      setBlobImg(response.data);
+    };
+    getImage();
+  }, []);
 
   const uploadImage = (blobInfo: BlobInfo, progress: (percent: number) => void): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -24,14 +35,14 @@ const PostEditor: React.FC = () => {
       const formData = new FormData();
       formData.append("file", blobInfo.blob(), blobInfo.filename());
 
-      xhr.open("POST", "YOUR_BACKEND_ENDPOINT", true);
+      xhr.open("POST", "/api/images", true); // Updated endpoint
       xhr.upload.onprogress = (e) => {
         progress((e.loaded / e.total) * 100);
       };
       xhr.onload = () => {
         if (xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
-          resolve(response.imageUrl); // Replace with the actual URL key in your response
+          resolve(response.imageUrl); // Ensure this matches the key in your response that contains the image URL
         } else {
           reject("Image upload failed");
         }
@@ -69,6 +80,7 @@ const PostEditor: React.FC = () => {
         onEditorChange={handleEditorChange}
       />
       <Button onClick={() => console.log(content)}>Post Thought</Button>
+      {blobImg !== "" && <Image alt="Vercel Blob Image" src={blobImg} fill />}
     </div>
   );
 };
