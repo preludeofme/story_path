@@ -8,13 +8,14 @@ interface FrameProps {
 export const BookFrame: React.FC<FrameProps> = ({ children }) => {
   return (
     <Box
+      id="BookFrame"
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         margin: "20px auto",
         padding: "20px",
-        backgroundColor: "#8c7b75",
+        background: "linear-gradient(to bottom, #e4e4e6, #e4e4e6)", // Subtle gradient
         boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
         borderRadius: "10px",
         width: "calc(70vw + 40px)", // Adjust width to fit the book plus padding
@@ -28,17 +29,19 @@ export const BookFrame: React.FC<FrameProps> = ({ children }) => {
       {[...Array(5)].map((_, index) => (
         <Box
           key={index}
+          id={"page-" + index}
           sx={{
             position: "absolute",
+
             top: 0, // Align with the top of the container
             right: 0, // Align with the right of the container
             bottom: 0, // Align with the bottom of the container
             left: 0, // Align with the left of the container
-            margin: `${index * 5}px`, // Create the stacked effect, adjust the multiplier as needed
-            background: "linear-gradient(to bottom, #fdfdfd, #f5f5f5)",
+            margin: `${index * 2}px`, // Create the stacked effect, adjust the multiplier as needed
+            background: "linear-gradient(to bottom, #dedfe1, #dedfe1)", // Subtle gradient
             zIndex: 1,
-            width: `calc(100% - ${index * 10}px)`, // Scale width based on the book's border
-            height: `calc(100% - ${index * 10}px + 0px)`, // Scale height based on the book's border
+            width: `calc(100% - ${index * 3}px)`, // Scale width based on the book's border
+            height: `calc(100% - ${index * 3}px + 0px)`, // Scale height based on the book's border
             border: "1px solid #bbb",
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             transition: "all 0.3s ease", // Smooth the transition on resizing

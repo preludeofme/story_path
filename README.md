@@ -1,3 +1,5 @@
 ## prompt
 
-I'm working on an app for a choose your own adventure book for kids. I'm using nextjs 13, mui 5, and typescript.
+I'm developing a Next.js v13 app with MUI v5, NextAuth v4, Prisma, and TypeScript, jest for a blog-like website where i can post thoughts that my father wrote down with some pictures. I would like the style to be like the user is reading someone's journal.
+My goal is a modern, mobile-responsive design like GitHub or Vercel.
+I need guidance on ensuring code accuracy and maintainability.
