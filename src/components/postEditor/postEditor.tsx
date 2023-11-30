@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Button } from "@mui/material";
-import Image from "next/image";
-import axios from "axios";
+import { Box, Button, TextField } from "@mui/material";
+import { title } from "process";
 
 const PostEditor: React.FC = () => {
   const [content, setContent] = useState<string>("");
-  const [blobImg, setBlobImg] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
   const handleEditorChange = (content: string) => {
     setContent(content);
   };
@@ -19,43 +18,63 @@ const PostEditor: React.FC = () => {
     blobUri: () => string;
     uri: () => string | undefined;
   }
-  const myURL = "https://aoswchlkodefxg8r.public.blob.vercel-storage.com/image-XcB2Rk5bu5yX8gzUsyZweBXIhi2oCJ.png";
-
-  useEffect(() => {
-    const getImage = async () => {
-      const response = await axios.get(`/api/images?url=${myURL}`);
-      setBlobImg(response.data);
-    };
-    getImage();
-  }, []);
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
 
   const uploadImage = (blobInfo: BlobInfo, progress: (percent: number) => void): Promise<string> => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const formData = new FormData();
-      formData.append("file", blobInfo.blob(), blobInfo.filename());
+      xhr.open("POST", `/api/images?filename=${blobInfo.filename}`, true);
 
-      xhr.open("POST", "/api/images", true); // Updated endpoint
       xhr.upload.onprogress = (e) => {
         progress((e.loaded / e.total) * 100);
       };
+
       xhr.onload = () => {
         if (xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
-          resolve(response.imageUrl); // Ensure this matches the key in your response that contains the image URL
+          resolve(response.url);
         } else {
           reject("Image upload failed");
         }
       };
+
       xhr.onerror = () => {
         reject("Image upload failed");
       };
-      xhr.send(formData);
+
+      // Send the blob directly
+      xhr.send(blobInfo.blob());
     });
+  };
+  const postThought = async () => {
+    try {
+      console.log("thoughts:", title, content);
+      const response = await fetch("/api/thoughts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, content }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      // Handle success (e.g., showing a success message or redirecting)
+    } catch (error) {
+      console.error("Failed to post thought", error);
+      // Handle failure (e.g., showing an error message)
+    }
   };
 
   return (
-    <div>
+    <Box>
+      <TextField label="Title" variant="outlined" value={title} onChange={handleTitleChange} fullWidth margin="normal" />
       <Editor
         initialValue="<p>Initial content</p>"
         apiKey="88q63nivq7o7jxmfk5812qk5uvqya2qzmjur28ucmhxbt1r5"
@@ -79,9 +98,8 @@ const PostEditor: React.FC = () => {
         }}
         onEditorChange={handleEditorChange}
       />
-      <Button onClick={() => console.log(content)}>Post Thought</Button>
-      {blobImg !== "" && <Image alt="Vercel Blob Image" src={blobImg} fill />}
-    </div>
+      <Button onClick={postThought}>Post Thought</Button>
+    </Box>
   );
 };
 

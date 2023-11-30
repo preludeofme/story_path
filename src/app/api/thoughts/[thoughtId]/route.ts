@@ -4,8 +4,8 @@ import prisma from "../../../../../prisma/prismaClient";
 
 export async function GET(req: NextRequest, { params }: { params: { thoughtId: number } }) {
   try {
-    const post = await prisma.post.findUnique({
-      where: { id: Number(params.thoughtId) },
+    const post = await prisma.thoughts.findUnique({
+      where: { thoughtId: Number(params.thoughtId) },
     });
 
     return NextResponse.json(post, { status: 200 });
